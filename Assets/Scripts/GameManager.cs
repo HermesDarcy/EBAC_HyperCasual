@@ -24,7 +24,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        ManagerSets managerSets = new ManagerSets();
+        managerSets = GameObject.FindAnyObjectByType<ManagerSets>();
+        speed = managerSets.playerSpeed;
         playerMove.speed = speed;
+        latSpeed = managerSets.playerlatSpeed;
         playerMove.latSpeed = latSpeed;
     }
 
@@ -50,8 +54,14 @@ public class GameManager : MonoBehaviour
         pGame.SetActive(true);
         pStart.SetActive(false);
         onGame = true;
+        Invoke("TimeToStart",0.5f);
+    }
+
+    private void TimeToStart()
+    {
         playerMove.changeRun();
     }
+
 
     public void reeStart()
     {
