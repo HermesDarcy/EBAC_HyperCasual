@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItensBase : MonoBehaviour
 
 {
-
+    
 
 
 
@@ -17,6 +17,8 @@ public class ItensBase : MonoBehaviour
             ColletedCoin();
 
         }
+        
+
     }
 
 

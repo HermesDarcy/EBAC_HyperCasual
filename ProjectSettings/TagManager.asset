@@ -7,6 +7,13 @@ TagManager:
   - coin
   - wall
   - EndLine
+  - plane
+  - Speed
+  - Invencivel
+  - Big
+  - Small
+  - Magnetic
+  - PowerUp
   layers:
   - Default
   - TransparentFX

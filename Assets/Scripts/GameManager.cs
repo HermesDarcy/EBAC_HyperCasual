@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         ManagerSets managerSets = new ManagerSets();
         managerSets = GameObject.FindAnyObjectByType<ManagerSets>();
         speed = managerSets.playerSpeed;
-        playerMove.speed = speed;
+        playerMove.oldSpeed = speed;
         latSpeed = managerSets.playerlatSpeed;
         playerMove.latSpeed = latSpeed;
     }

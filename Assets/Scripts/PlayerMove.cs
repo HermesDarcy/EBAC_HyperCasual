@@ -2,23 +2,33 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-//using DG.Tweening;
+using Play.HD.Singleton;
+using UnityEngine.UIElements;
+
 
 public class PlayerMove : MonoBehaviour
 {
     public bool inGame { get; private set; }
-    public float speed;
+    public float speed { get; private set; }
+    public float oldSpeed;
     public float latSpeed;
     public float tapDist;
+    
+    public bool noDeath { get; private set; }
+    private Vector3 oldScale;
+    public Vector3 newScale { get; private set; }
     public GameManager manager;
+    public GameObject cube;
+    public GameObject shield;
+    public GameObject magnetic;
     public Vector2 startTouch, toTouch;
     public float moveTouch;
     [SerializeField]
     private float limtsPlane, forceUp;
     private float minY;
     private Rigidbody rb;
+   
     public bool isJump = false;
 
 
@@ -29,6 +39,10 @@ public class PlayerMove : MonoBehaviour
         inGame = false;
         rb = GetComponent<Rigidbody>();
         minY = transform.position.y;
+        speed =  oldSpeed;
+        oldScale = Vector3.one;
+        shield.SetActive(false);
+        magnetic.SetActive(false);
     }
 
     // Update is called once per frame
@@ -59,13 +73,14 @@ public class PlayerMove : MonoBehaviour
                 //Debug.Log("move" + moveTouch);
             }
 
+            /*
             if((startTouch - toTouch).magnitude < tapDist && toque.phase == TouchPhase.Ended && isJump==false)
             {
                 StartCoroutine(jump());
                 isJump = true;
                 
             }
-            
+            */
             
             // Fim do toque
             if (toque.phase == TouchPhase.Ended )
@@ -81,6 +96,7 @@ public class PlayerMove : MonoBehaviour
         }
         
         // uso do mouse
+        /*
         if(Input.GetMouseButton(0)) 
         {
         
@@ -89,6 +105,7 @@ public class PlayerMove : MonoBehaviour
         
         }
         startTouch = Input.mousePosition;
+        */
 
         movedPlayer();
     
@@ -135,8 +152,16 @@ public class PlayerMove : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("wall"))
         {
-            manager.reeStart();
-            inGame = false;
+            if(noDeath == false)
+            {
+                manager.reeStart();
+                inGame = false;
+            }
+            else
+            {
+                collision.gameObject.GetComponent<Wall_efects>().invencibleImpact();
+            }
+            
         }
         
         if (collision.gameObject.CompareTag("EndLine"))
@@ -152,6 +177,59 @@ public class PlayerMove : MonoBehaviour
 
 
     }
+
+
+    public void powerUpSpeed(float newSpeed, float istime)
+    {
+        speed = newSpeed;
+        Invoke("resetPowerUps", istime);
+        
+    }
+
+    public void doNewScale(float scale,float istime)
+    {
+        //transform.localScale = oldScale * scale;
+        transform.DOScale(oldScale * scale, 1f);
+        Invoke("resetPowerUps", istime);
+    }
+
+
+    public void PowerUpNoDeath(float istime)
+    {
+        noDeath = true;
+        shield.SetActive(true);
+        Invoke("resetPowerUps", istime);
+    }
+
+    public void PowerUpMagnetic(float istime)
+    {
+        magnetic.SetActive(true);
+        Invoke("resetPowerUps", istime);
+    }
+
+    public void PowerUpJump()
+    {
+        StartCoroutine(jump());
+        isJump = true;
+    }
+
+
+
+
+    private void resetPowerUps()
+    {
+        speed = oldSpeed;
+        transform.DOScale(oldScale, 1f);
+        shield.SetActive(false);
+        noDeath = false;  
+        magnetic.SetActive(false);
+    }
+
+
+
+
+
+
 
     IEnumerator jump()
     {
