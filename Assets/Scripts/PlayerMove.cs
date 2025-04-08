@@ -96,7 +96,7 @@ public class PlayerMove : MonoBehaviour
         }
         
         // uso do mouse
-        /*
+        
         if(Input.GetMouseButton(0)) 
         {
         
@@ -105,7 +105,7 @@ public class PlayerMove : MonoBehaviour
         
         }
         startTouch = Input.mousePosition;
-        */
+        
 
         movedPlayer();
     
