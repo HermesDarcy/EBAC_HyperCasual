@@ -24,6 +24,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject magnetic;
     public Vector2 startTouch, toTouch;
     public float moveTouch;
+    public AnimatorManager animatorManager;
     [SerializeField]
     private float limtsPlane, forceUp;
     private float minY;
@@ -43,6 +44,7 @@ public class PlayerMove : MonoBehaviour
         oldScale = Vector3.one;
         shield.SetActive(false);
         magnetic.SetActive(false);
+        animatorManager.OnPlay(AnimatorManager.typeAnimator.IDLE);
     }
 
     // Update is called once per frame
@@ -146,6 +148,12 @@ public class PlayerMove : MonoBehaviour
     public void changeRun()
     {
         inGame = !inGame;
+        if (inGame)
+        {
+            animatorManager.OnPlay(AnimatorManager.typeAnimator.RUN);
+        }
+    
+    
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -156,6 +164,8 @@ public class PlayerMove : MonoBehaviour
             {
                 manager.reeStart();
                 inGame = false;
+                animatorManager.OnPlay(AnimatorManager.typeAnimator.DEAD);
+                transform.DOMoveZ(-1f, 0.2f).SetRelative();
             }
             else
             {
@@ -168,6 +178,7 @@ public class PlayerMove : MonoBehaviour
         {
             manager.endLine();
             inGame = false;
+            animatorManager.OnPlay(AnimatorManager.typeAnimator.IDLE);
         }
 
         if (collision.gameObject.CompareTag("plane"))
@@ -182,6 +193,7 @@ public class PlayerMove : MonoBehaviour
     public void powerUpSpeed(float newSpeed, float istime)
     {
         speed = newSpeed;
+        animatorManager.OnPlay(AnimatorManager.typeAnimator.RUN, newSpeed / oldSpeed);
         Invoke("resetPowerUps", istime);
         
     }
@@ -223,6 +235,10 @@ public class PlayerMove : MonoBehaviour
         shield.SetActive(false);
         noDeath = false;  
         magnetic.SetActive(false);
+        if (inGame)
+        {
+            animatorManager.OnPlay(AnimatorManager.typeAnimator.RUN);
+        }
     }
 
 

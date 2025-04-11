@@ -7,10 +7,16 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    
-    public GameObject pGame,pStart,pReStart;
+
+    [Header("Manager")]
     public bool onGame;
+    public OrbitalManager orbitalManager;
+    public float rotationSpeed = 30f;
     
+
+    [Header("UI")]
+    public GameObject pGame;
+    public GameObject pStart,pReStart;
     public TMP_Text coinText, textCoinP;
     public Image imVict, imDefeat;
 
@@ -18,7 +24,6 @@ public class GameManager : MonoBehaviour
     public PlayerMove playerMove;
     public float speed;
     public float latSpeed;
-
     private int coins;
     private float limtsPlane;
 
@@ -46,7 +51,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void startGame()
@@ -70,6 +75,7 @@ public class GameManager : MonoBehaviour
         imDefeat.gameObject.SetActive(true);
         imDefeat.transform.DOScale(4, 1.5f);
         textCoinP.text = coins.ToString();
+        orbitalManager.isOrbit = true;
 
     }
 
@@ -85,6 +91,10 @@ public class GameManager : MonoBehaviour
         imVict.gameObject.SetActive(true);
         imVict.transform.DOScale(4, 1.5f);
         textCoinP.text = coins.ToString();
+        orbitalManager.isOrbit = true;
+
+
+
     }
 
     public void startScene(int s = 0)
