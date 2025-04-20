@@ -192,7 +192,7 @@ public class PlayerMove : MonoBehaviour
 
     public void powerUpSpeed(float newSpeed, float istime)
     {
-        speed = newSpeed;
+        speed = speed * newSpeed;
         animatorManager.OnPlay(AnimatorManager.typeAnimator.RUN, newSpeed / oldSpeed);
         Invoke("resetPowerUps", istime);
         
@@ -213,7 +213,7 @@ public class PlayerMove : MonoBehaviour
         Invoke("resetPowerUps", istime);
     }
 
-    public void PowerUpMagnetic(float istime)
+    public void PowerUpMagnetic(float istime = 3f) // PowerUpMagnetic
     {
         magnetic.SetActive(true);
         Invoke("resetPowerUps", istime);

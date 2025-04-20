@@ -8,7 +8,8 @@ public class PowerUpsBase : ItensBase
     public float slowSpeed;
     public float bigScale, smallScale;
     public bool invencivel;
-
+    public powerUp myPower;
+    [SerializeField]
     private PlayerMove player;
 
     public enum powerUp
@@ -30,7 +31,7 @@ public class PowerUpsBase : ItensBase
     }
 
 
-    public powerUp myPower;
+    
 
 
     protected override void onColleted()

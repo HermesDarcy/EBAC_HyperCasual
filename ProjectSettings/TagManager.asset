@@ -14,6 +14,8 @@ TagManager:
   - Small
   - Magnetic
   - PowerUp
+  - Tree
+  - plate
   layers:
   - Default
   - TransparentFX

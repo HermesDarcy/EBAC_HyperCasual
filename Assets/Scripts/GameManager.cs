@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     private int coins;
     private float limtsPlane;
 
+    
+    
+
     private void Awake()
     {
         ManagerSets managerSets = new ManagerSets();
@@ -113,3 +116,4 @@ public class GameManager : MonoBehaviour
     }
 
 }
+
