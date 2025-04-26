@@ -21,9 +21,30 @@ public class ArtManager : Singleton<ArtManager>
     }
 
 
-    public void newArttype(ArtType type)
+    public void newArttype(int type)
     {
-        artType = type;
+        switch(type)
+        {
+            case 0:
+                artType = ArtType.type_1;
+                break;
+            case 1:
+                artType = ArtType.type_2;
+                break;
+            case 2:
+                artType = ArtType.type_3;
+                break;
+            case 3:
+                artType = ArtType.forest;
+                break;
+            case 4:
+                artType = ArtType.snow;
+                break;
+            case 5:
+                artType = ArtType.nono;
+                break;
+        }
+        //artType = ArtType.nono;
     }
 
 

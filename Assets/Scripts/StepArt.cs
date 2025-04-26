@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StepArt : MonoBehaviour
+public class StepArt : MonoBehaviour // elementos que compoem
 {
     
     public List<GameObject> objects = new List<GameObject>();

@@ -1,6 +1,10 @@
-using NUnit.Framework;
+
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
+using Play.HD.Singleton;
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -10,6 +14,8 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> elements;
     public Transform container;
     public int numSteps;
+    public float durTime = 0.1f;
+    public Ease ease = Ease.OutBack;
     
     private List<GameObject> levelSteps = new List<GameObject>();
     private List<GameObject> elementsSteps = new List<GameObject>();
@@ -17,7 +23,11 @@ public class LevelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //int k = Random.Range(0, 6);
+        //ArtManager.Instance.newArttype(k);
+        numSteps = ManagerSets.Instance.numsteps;
         SpanwSteps(numSteps);
+        container = GameObject.Find("container").transform;
     }
 
     // Update is called once per frame
@@ -27,8 +37,29 @@ public class LevelManager : MonoBehaviour
         {
             ClearSteps();
             SpanwSteps(numSteps);
+            
+            ZeroScaleSteps();
+            StartCoroutine(ResetScaleSteps());
+            int k = Random.Range(0, 6);
+            ArtManager.Instance.newArttype(k);
         }
     }
+
+    
+    public void newLevel()
+    {
+        /*
+        numSteps += 5;
+        ClearSteps();
+        SpanwSteps(numSteps);
+
+        ZeroScaleSteps();
+        StartCoroutine(ResetScaleSteps());
+        */
+        int k = Random.Range(0, 6);
+        ArtManager.Instance.newArttype(k);
+    }
+    
 
     private void SpanwSteps(int ns)
     {
@@ -62,6 +93,9 @@ public class LevelManager : MonoBehaviour
     }
 
 
+
+
+
     public void ClearSteps()
     {
         for(int i = levelSteps.Count-1; i >= 0; i--)  
@@ -77,5 +111,36 @@ public class LevelManager : MonoBehaviour
         elementsSteps.Clear(); 
     }
 
+
+    private void ZeroScaleSteps()
+    {
+        foreach(var element in levelSteps)
+        {
+            element.transform.localScale = Vector3.zero;
+        }
+        foreach(var element in elementsSteps)
+        {
+            element.transform.localScale = Vector3.zero;
+        }
+
+    }
+
+
+    IEnumerator ResetScaleSteps()
+    {
+        yield return new WaitForEndOfFrame();
+        Debug.Log(levelSteps.Count);
+        foreach (var element in levelSteps)
+        {
+            element.transform.DOScale(1,durTime).SetEase(ease);
+            yield return new WaitForEndOfFrame();
+        }
+        foreach (var element in elementsSteps)
+        {
+            element.transform.DOScale(1, durTime).SetEase(ease);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return null;
+    }
 
 }

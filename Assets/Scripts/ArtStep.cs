@@ -1,10 +1,13 @@
 using UnityEngine;
+using DG.Tweening;
 
-public class ArtStep : MonoBehaviour
+public class ArtStep : MonoBehaviour  // placa e lateral
 {
     
     private MeshRenderer mr;
     public ArtManager artManager;
+    private float dgTime = 1f;
+    private Ease ease = Ease.OutBack;
     
 
     private void Start()
@@ -29,7 +32,8 @@ public class ArtStep : MonoBehaviour
         {
             if(child.CompareTag("plate"))
             {
-                child.GetComponent<MeshRenderer>().material.color = cor;
+                child.GetComponent<MeshRenderer>().material.color = Color.white;
+                child.GetComponent<MeshRenderer>().material.DOColor(cor,dgTime).SetEase(ease);
             }
         }
         

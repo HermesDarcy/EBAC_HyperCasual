@@ -186,7 +186,10 @@ public class PlayerMove : MonoBehaviour
             isJump = false;
         }
 
-
+        if (collision.gameObject.CompareTag("PowerUp"))
+        {
+           transform.DOScale(1.3f,.1f).SetLoops(4, LoopType.Yoyo);
+        }
     }
 
 
