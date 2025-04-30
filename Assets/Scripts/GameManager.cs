@@ -39,7 +39,11 @@ public class GameManager : MonoBehaviour
     
 
 
-    private void Awake()
+   
+
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
         ManagerSets managerSets = new ManagerSets();
         managerSets = GameObject.FindAnyObjectByType<ManagerSets>();
@@ -47,16 +51,6 @@ public class GameManager : MonoBehaviour
         playerMove.oldSpeed = speed;
         latSpeed = managerSets.playerlatSpeed;
         playerMove.latSpeed = latSpeed;
-
-        int k = Random.Range(0, 7);
-        //artManager.newArttype(k);
-
-    }
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         pGame.SetActive(false);
         pStart.SetActive(true);
         pReStart.SetActive(false);
@@ -64,6 +58,8 @@ public class GameManager : MonoBehaviour
         coins = ManagerSets.Instance.score;
         int k = Random.Range(0, 6);
         levelText.text = "LEVEL " + ManagerSets.Instance.nunLevel.ToString();
+        speed = managerSets.playerSpeed;
+        playerMove.oldSpeed = speed;
         //artManager.newArttype(k);
         //ArtManager.Instance.newArttype(k);
     }

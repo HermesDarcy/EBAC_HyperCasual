@@ -1659,18 +1659,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748021335}
   m_CullTransparentMesh: 1
---- !u!114 &752993002 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8107498247853713096, guid: 05807b2d111a53e418718f07d906b793,
-    type: 3}
-  m_PrefabInstance: {fileID: 1160839574208606049}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf7a7a83dcbf264bb6f67d1ea4675fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &790872200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6814072636799480423, guid: d132ba0a0f0d5e54cb8ee649fc5fb383,
@@ -3807,10 +3795,12 @@ MonoBehaviour:
   - {fileID: 6649742449448666229, guid: 91169c4d4da7540478b4acd7f02861be, type: 3}
   - {fileID: 7802404683501797907, guid: 7a090aec7bc143b45869eaea1139cd48, type: 3}
   - {fileID: 1531584905269744680, guid: 107c52a66d16a8942a63e06f057459bb, type: 3}
-  container: {fileID: 0}
+  - {fileID: 9123829679350905948, guid: 614bbc9d99a41664cbb76555838c7236, type: 3}
+  - {fileID: 1531584905269744680, guid: 107c52a66d16a8942a63e06f057459bb, type: 3}
+  container: {fileID: 43292539}
   numSteps: 20
-  durTime: 0.2
-  ease: 27
+  durTime: 0.5
+  ease: 14
 --- !u!4 &1922734215
 Transform:
   m_ObjectHideFlags: 0
@@ -4320,6 +4310,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1836540291312520887, guid: 05807b2d111a53e418718f07d906b793,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6103375877827358426, guid: 05807b2d111a53e418718f07d906b793,
         type: 3}
       propertyPath: manager
@@ -4327,24 +4322,29 @@ PrefabInstance:
       objectReference: {fileID: 664299987}
     - target: {fileID: 6103375877827358426, guid: 05807b2d111a53e418718f07d906b793,
         type: 3}
-      propertyPath: animatorManager
+      propertyPath: audioWin
       value: 
-      objectReference: {fileID: 752993002}
-    - target: {fileID: 8107498247853713096, guid: 05807b2d111a53e418718f07d906b793,
+      objectReference: {fileID: 8300000, guid: aa348f776c7354f36917fef10c6b48d1, type: 3}
+    - target: {fileID: 6103375877827358426, guid: 05807b2d111a53e418718f07d906b793,
         type: 3}
-      propertyPath: animSet.Array.data[0].speed
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8107498247853713096, guid: 05807b2d111a53e418718f07d906b793,
+    - target: {fileID: 6103375877827358426, guid: 05807b2d111a53e418718f07d906b793,
         type: 3}
-      propertyPath: animSet.Array.data[1].speed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8107498247853713096, guid: 05807b2d111a53e418718f07d906b793,
+      propertyPath: audioDeath
+      value: 
+      objectReference: {fileID: 8300000, guid: a9e925ca095e74c6781bc9cceafc6743, type: 3}
+    - target: {fileID: 6103375877827358426, guid: 05807b2d111a53e418718f07d906b793,
         type: 3}
-      propertyPath: animSet.Array.data[2].speed
-      value: 1
+      propertyPath: limtsPlane
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6103375877827358426, guid: 05807b2d111a53e418718f07d906b793,
+        type: 3}
+      propertyPath: audioPowerUp
+      value: 
+      objectReference: {fileID: 8300000, guid: a2ae90e42daaf4723a539c25867d37fd, type: 3}
     - target: {fileID: 8557543696264302121, guid: 05807b2d111a53e418718f07d906b793,
         type: 3}
       propertyPath: m_Name
@@ -5143,8 +5143,8 @@ SceneRoots:
   - {fileID: 651661441}
   - {fileID: 705507995}
   - {fileID: 1302399614}
-  - {fileID: 1459603885}
   - {fileID: 1160839574208606049}
+  - {fileID: 1459603885}
   - {fileID: 658974247}
   - {fileID: 65081501}
   - {fileID: 43292539}

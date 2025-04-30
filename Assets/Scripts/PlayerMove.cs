@@ -1,36 +1,52 @@
 using DG.Tweening;
-using System;
+//using System;
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using UnityEngine;
-using Play.HD.Singleton;
-using UnityEngine.UIElements;
+//using Play.HD.Singleton;
+//using UnityEngine.UIElements;
 
 
 public class PlayerMove : MonoBehaviour
 {
+    
     public bool inGame { get; private set; }
     public float speed { get; private set; }
+    public bool noDeath { get; private set; }
+    public Vector3 newScale { get; private set; }
+    
+    [Header("Sets")]
     public float oldSpeed;
     public float latSpeed;
     public float tapDist;
-    
-    public bool noDeath { get; private set; }
-    private Vector3 oldScale;
-    public Vector3 newScale { get; private set; }
     public GameManager manager;
+    public bool isJump = false;
+   
+    
+    [Header("FBXs")]
     public GameObject cube;
     public GameObject shield;
     public GameObject magnetic;
-    public Vector2 startTouch, toTouch;
-    public float moveTouch;
+    public GameObject smoke;
+    public ParticleSystem skull;
     public AnimatorManager animatorManager;
+
+    [Header("SFX")]
+    public AudioClip audioPowerUp;
+    public AudioClip audioDeath; 
+    public AudioClip audioWin;
+    
+    private Vector2 startTouch, toTouch;
+    
+    private float moveTouch;
     [SerializeField]
     private float limtsPlane, forceUp;
     private float minY;
     private Rigidbody rb;
-   
-    public bool isJump = false;
+    private Vector3 oldScale;
+    private AudioSource audioSource;
+
+
 
 
 
@@ -39,11 +55,14 @@ public class PlayerMove : MonoBehaviour
     {
         inGame = false;
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
+        //audioSource.mute = true;
         minY = transform.position.y;
         speed =  oldSpeed;
         oldScale = Vector3.one;
         shield.SetActive(false);
         magnetic.SetActive(false);
+        smoke.SetActive(false);
         animatorManager.OnPlay(AnimatorManager.typeAnimator.IDLE);
     }
 
@@ -57,8 +76,10 @@ public class PlayerMove : MonoBehaviour
         // uso do touch
         if (Input.touchCount > 0)
         {
-            Touch toque = Input.GetTouch(0);
             
+            
+            Touch toque = Input.GetTouch(0);
+            Debug.Log(toque.tapCount);
 
             // Início do toque
             if (toque.phase == TouchPhase.Began)
@@ -166,10 +187,21 @@ public class PlayerMove : MonoBehaviour
                 inGame = false;
                 animatorManager.OnPlay(AnimatorManager.typeAnimator.DEAD);
                 transform.DOMoveZ(-1f, 0.2f).SetRelative();
+                skull.Play();
+                audioSource.clip = audioDeath;
+                audioSource.Play();
             }
             else
             {
-                collision.gameObject.GetComponent<Wall_efects>().invencibleImpact();
+                if(collision.gameObject.GetComponent<Wall_efects>() != null)
+                {
+                    collision.gameObject.GetComponent<Wall_efects>().invencibleImpact();
+                }
+                else
+                {
+                    Debug.Log("Wall não encontrado");
+                }
+                
             }
             
         }
@@ -179,6 +211,8 @@ public class PlayerMove : MonoBehaviour
             manager.endLine();
             inGame = false;
             animatorManager.OnPlay(AnimatorManager.typeAnimator.IDLE);
+            audioSource.clip = audioWin;
+            audioSource.Play();
         }
 
         if (collision.gameObject.CompareTag("plane"))
@@ -189,6 +223,8 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.CompareTag("PowerUp"))
         {
            transform.DOScale(1.3f,.1f).SetLoops(4, LoopType.Yoyo);
+           audioSource.clip = audioPowerUp;
+           audioSource.Play();
         }
     }
 
@@ -196,6 +232,10 @@ public class PlayerMove : MonoBehaviour
     public void powerUpSpeed(float newSpeed, float istime)
     {
         speed = speed * newSpeed;
+        if(speed > oldSpeed)
+        {
+            smoke.SetActive(true);
+        }
         animatorManager.OnPlay(AnimatorManager.typeAnimator.RUN, newSpeed / oldSpeed);
         Invoke("resetPowerUps", istime);
         
@@ -234,6 +274,7 @@ public class PlayerMove : MonoBehaviour
     private void resetPowerUps()
     {
         speed = oldSpeed;
+        smoke.SetActive(false);
         transform.DOScale(oldScale, 1f);
         shield.SetActive(false);
         noDeath = false;  

@@ -17,14 +17,15 @@ public class Wall_efects : MonoBehaviour
         boxCollider.enabled = false;
         effect.SetActive(true);
         block.SetActive(false);
-        Invoke("myDestrutor", 3f);
+        Invoke("myDestrutor", 2f);
 
     }
 
 
     public void myDestrutor()
     {
-        Destroy(this.gameObject);
+        effect.SetActive(false);
+        //Destroy(this.gameObject);
     }
 
 
